@@ -1,8 +1,7 @@
 FROM node:18-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --only=production  # вместо npm ci
 COPY . .
 EXPOSE 8081
-USER node
 CMD ["node", "server.js"]
