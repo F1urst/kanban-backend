@@ -1,9 +1,4 @@
-FROM node:18-alpine
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
 EXPOSE 8081
-USER node
-CMD ["node", "server.js"]
-
+CMD ["nginx", "-g", "daemon off;"]
