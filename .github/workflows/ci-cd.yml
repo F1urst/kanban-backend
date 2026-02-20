@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
 
       - name: сборка
-        run: docker build -t ${{ secrets.NAME }}/kanban-backend:latest .
+          run: docker build -t ${{ secrets.NAME }}/kanban-backend:latest 
 
       - name: отправка
         run: docker push ${{ secrets.NAME }}/kanban-backend:latest
