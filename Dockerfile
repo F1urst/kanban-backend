@@ -1,7 +1,7 @@
 FROM node:18-alpine
 WORKDIR /app
-COPY kanban-backend/package*.json ./
-COPY kanban-backend/. .
+COPY package*.json ./
+COPY . .
 RUN npm install
 EXPOSE 8081
 CMD ["node", "server.js"]
