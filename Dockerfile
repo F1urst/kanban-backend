@@ -1,6 +1,5 @@
 FROM node:18-alpine
 WORKDIR /app
-# Копируем из папки kanban-backend
 COPY kanban-backend/package*.json ./
 RUN npm install
 COPY kanban-backend/. .
