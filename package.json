@@ -1,63 +1,11 @@
-name: Build and Push
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Create correct package.json
-        run: |
-          # Удаляем старый файл если есть
-          rm -f package.json
-          # Создаем правильный package.json
-          echo '{
-            "name": "kanban-backend",
-            "version": "1.0.0",
-            "description": "Kanban backend",
-            "main": "server.js",
-            "scripts": {
-              "start": "node server.js",
-              "dev": "nodemon server.js"
-            },
-            "dependencies": {
-              "express": "^4.18.2",
-              "cors": "^2.8.5",
-              "dotenv": "^16.0.3"
-            }
-          }' > package.json
-          
-          # Проверяем что создалось
-          echo "Содержимое package.json:"
-          cat package.json
-      
-      - name: Create server.js if not exists
-        run: |
-          if [ ! -f server.js ]; then
-            echo 'const express = require("express");
-            const app = express();
-            const port = process.env.PORT || 8081;
-            
-            app.get("/", (req, res) => {
-              res.send("Kanban Backend is running");
-            });
-            
-            app.listen(port, () => {
-              console.log(`Server running on port ${port}`);
-            });' > server.js
-          fi
-      
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.NAME }}
-          password: ${{ secretsPASSWORD }}
-      
-      - name: Build and push
-        run: |
-          docker build -t ${{ secrets.RNAME }}/kanban-backend:latest .
-          docker push ${{ secrets.NAME }}/kanban-backend:latest
+- name: Create package.json
+  run: |
+    cat > package.json <<EOF
+    {
+      "name": "kanban-backend",
+      "version": "1.0.0",
+      "main": "server.js",
+      "dependencies": {
+        "express": "^4.18.2"
+      }
+    }
